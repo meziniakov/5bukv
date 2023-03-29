@@ -1,4 +1,4 @@
-import 'react-simple-keyboard/build/css/index.css';
+import "react-simple-keyboard/build/css/index.css";
 
 import { useEffect, useRef, useState } from "react";
 import KeyboardReact from "react-simple-keyboard";
@@ -14,7 +14,7 @@ import WordList from "./WordList";
 
 const FiveBukv = () => {
   const keyboard = useRef();
-  const [targetWord, setTargetWord] = useState('');
+  const [targetWord, setTargetWord] = useState("");
   const initialState = {
     1: [],
     2: [],
@@ -29,16 +29,18 @@ const FiveBukv = () => {
   const [variant, setVariant] = useState(initialState);
   const [currentTry, setCurrentTry] = useState(1);
   const [isWin, setIsWin] = useState(false);
-  const [fetching, setFetching] = useState(true)
+  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    return async () => {
-      await fetch('/api/5bukv').then(res => res.json()).then(({randomWord}) => {
-        setTargetWord(randomWord.toUpperCase())
-        setFetching(false)
-      })
-    }
-  },[fetching])
+    (async () => {
+      await fetch("/api/5bukv")
+        .then((res) => res.json())
+        .then(({ randomWord }) => {
+          setTargetWord(randomWord.toUpperCase());
+          setFetching(false);
+        });
+    })();
+  }, [fetching]);
 
   const startAgain = () => {
     setCurrentTry(1);
@@ -47,26 +49,25 @@ const FiveBukv = () => {
     setLettersInWord(initialState);
     setLettersNotInWord(initialState);
     setIsWin(!isWin);
-    setFetching(true)
+    setFetching(true);
   };
 
   const isWordExists = async (awaitWord) => {
-    const res = await fetch('/api/5bukv', {
-      method: 'POST',
+    const res = await fetch("/api/5bukv", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({word: awaitWord})
-      
-    })
-    const data = await res.json()
-    return data.isWordExists
-  }
+      body: JSON.stringify({ word: awaitWord }),
+    });
+    const data = await res.json();
+    return data.isWordExists;
+  };
 
   const handleWord = async (awaitWord) => {
     if (targetWord === awaitWord) return startAgain();
-    if(await isWordExists(awaitWord)) {
+    if (await isWordExists(awaitWord)) {
       keyboard?.current?.clearInput();
       setCurrentTry((prev) => prev + 1);
       Object.keys(awaitWord).forEach((i) => {
@@ -90,7 +91,7 @@ const FiveBukv = () => {
         }
       });
     } else {
-      return console.log('такого слова не существует')
+      return console.log("такого слова не существует");
     }
   };
 
@@ -128,20 +129,21 @@ const FiveBukv = () => {
   return isWin ? (
     <div className="h-full items-center w-full bg-black">
       <div className="mx-auto h-full flex w-full place-content-center flex-col text-white">
-        <div className='text-center'>
-          <span className=' text-4xl'>🥳</span>
-        <h2 className='text-2xl mb-4'>Вы выиграли</h2>
-        <span className=" mt-5 cursor-pointer" onClick={startAgain}>
-          Начать заново?
-        </span>
+        <div className="text-center">
+          <span className=" text-4xl">🥳</span>
+          <h2 className="text-2xl mb-4">Вы выиграли</h2>
+          <span className=" mt-5 cursor-pointer" onClick={startAgain}>
+            Начать заново?
+          </span>
         </div>
       </div>
     </div>
   ) : (
     <div className="h-full w-full bg-black">
       <div className="mx-auto flex flex-col w-[400px] bg-black">
-      <h1 className='text-white text-center font-extrabold items-center p-3 text-3xl'>Игра 5 БУКВ</h1>
-      {/* <p className='text-white text-center'>{targetWord}</p> */}
+        <h1 className="text-white text-center font-extrabold items-center p-3 text-3xl">
+          Игра 5 БУКВ
+        </h1>
         <WordList
           targetWord={targetWord}
           variant={variant}
@@ -150,7 +152,7 @@ const FiveBukv = () => {
           lettersInWord={lettersInWord}
           lettersMatchInTargetWord={lettersMatchInTargetWord}
         />
-      <div className="mx-auto mt-4 w-[400px] bottom-0">
+        <div className="mx-auto mt-4 w-[400px] bottom-0">
           <KeyboardReact
             keyboardRef={(e) => {
               keyboard.current = e;
@@ -199,9 +201,8 @@ const FiveBukv = () => {
             ]}
             onKeyPress={onKeyPress}
           />
+        </div>
       </div>
-      </div>
-
     </div>
   );
 };
