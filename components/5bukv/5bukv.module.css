@@ -1,0 +1,47 @@
+
+.simple-keyboard {
+  max-width: 850px;
+}
+
+.hg-button.hg-functionBtn.hg-button-enter.enterClass {
+  background: rgb(253 224 71);
+  color: black
+}
+
+.hg-button.hg-functionBtn.hg-button-bksp.bkspClass {
+  background: white;
+  color: black
+}
+
+.simple-keyboard.hg-theme-default.myTheme {
+  color: white;
+  background: black;
+  width: 100%
+}
+
+.simple-keyboard.hg-layout-default .hg-button.hg-red {
+  background: rgb(255, 0, 0, 0.7);
+  color: green;
+}
+.simple-keyboard.hg-layout-default .hg-button {
+/*   background: rgb(156 163 175, 0.7); */
+  color: white;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  align-items: center;
+  background: black;
+  font-size: small;
+  border: 1px solid #b5b5b5;
+  border-radius: 5px;
+  box-shadow: 0 0 3px -0px rgb(0 0 0 / 30%);
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  padding: 5px;
+}
+
+.simple-keyboard.hg-layout-default .hg-button.hg-highlight {
+  box-shadow: 0px 0px 40px 5px rgba(255, 255, 0, 0.5);
+  z-index: 1;
+}
